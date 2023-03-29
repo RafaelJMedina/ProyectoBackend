@@ -1,0 +1,38 @@
+[
+	{
+		"title": "Remera",
+		"description": "Ropa",
+		"price": "10000",
+		"thumbnail": "sin imagen",
+		"code": "R1",
+		"stock": "100",
+		"id": 1
+	},
+	{
+		"title": "Computadora",
+		"description": "Tecnologia",
+		"price": "100000",
+		"thumbnail": "sin imagen",
+		"code": "t1",
+		"stock": "10",
+		"id": 2
+	},
+	{
+		"title": "Celular",
+		"description": "Tecnologia",
+		"price": "45000",
+		"thumbnail": "sin imagen",
+		"code": "t2",
+		"stock": "50",
+		"id": 3
+	},
+	{
+		"title": "Cepillo",
+		"description": "Higiene",
+		"price": "500",
+		"thumbnail": "sin imagen",
+		"code": "H1",
+		"stock": "200",
+		"id": 5
+	}
+]
