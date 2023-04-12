@@ -38,13 +38,16 @@ export default class ProductManager {
 
   getProductById = async(id) =>{
     try {
-      const productos = await this.getProducts();
-      const producto = productos.filter((producto) =>  {
+      const productos = await this.consultarProductos();
+      const productosFilter = productos.filter((producto) => {
         return producto.id == id
-        })
+      })
+      return productosFilter.length
+        ? productosFilter[0]
+        : `No existe el producto con id ${id}`;
     }catch(err) {
       return err;
-    }   
+    }  
   }
 
   deletProductById = async (id) => {
