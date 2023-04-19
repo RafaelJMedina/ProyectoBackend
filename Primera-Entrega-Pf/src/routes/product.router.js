@@ -18,7 +18,7 @@ router.get('/', async (req,res)=>{
 
 router.get('/:pid', async (req,res)=>{
     
-    const id = req.params.id;
+    const id = req.params.pid;
     const products = await manager.consultarProductos();
 
     const productoId = products.find(product => product.id == id);
@@ -33,35 +33,33 @@ router.get('/:pid', async (req,res)=>{
 
 router.post ('/', async (req, res) => {
 
-    let productoNuevo = req.body;
-    if (!productoNuevo.tilte || !productoNuevo.id ) {
-        return res.status(400).send({
-            status: 'error', error:'Valores repetido o incompletos'
-        })
-    }
-    productos.push(productoNuevo);
-
-    res.send({status:'Success',message:'Producto Creado'});
+    const productoNuevo = req.body; 
+    const productoAgregado = await manager.addProduct(productoNuevo)
+    if (productoAgregado) {
+        /* Si todo va bien, enviar respuesta al cliente con res.send() */
+        res.status(201).json(productoAgregado);
+      }
+      else{
+        /* Si ocurre un error, enviar una respuesta de error al cliente con res.status() y res.send() */
+        res.status(500).send('Error al agregar el producto: ' + error.message);
+      };   
 })
 
 router.put('/:pid', async (req, res)=>{
     const pid = req.params.pid;
     const p = req.body.p;
-    const product = await manager.updateProduct();
-
-    const productoActualizado = product.find(product => product.id == id);
-
-    if (productoActualizado) {
-        res.send(productoActualizado.manager.updateProduct())
-    } else {
-        res.send(`No se encuentra ningun producto por actualizar`)
+    const productoActualizado = await manager.updateProduct(pid, p)
+    if(productoActualizado) {
+      res.json(productoActualizado);
     }
-
+    else{
+      res.status(500).send('Error al actualizar el producto: ' + error.message);
+    };
 })
 
 router.delete ('/:pid', async (req, res)=> {
     const pid = parseInt(req.params.pid)
-    res.send({status: 'Success',message: await manager.deletProductById()})
+    res.send({status: 'Success',message: await manager.deletProductById(pid)})
 })
 
 export default router;

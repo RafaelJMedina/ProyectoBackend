@@ -2,7 +2,7 @@ import fs from "fs";
 
 export default class ProductManager {
   constructor(path) {
-    this.path = "./Files/Productos.json";
+    this.path = "..\src\Files\Productos.json";
   }
 
   consultarProductos = async () => {
