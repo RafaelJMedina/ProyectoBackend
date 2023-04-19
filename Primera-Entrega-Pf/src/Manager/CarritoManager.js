@@ -5,17 +5,17 @@ const productos = new ProductManager();
 
 export default class CarritoManager {
     constructor(path) {
-        this.path = "./Files/Carritos.json";
+        this.path = "../Files/Carritos.json";
     }
 
-    addProductInCart = async (req, res)=> {
+    addProductInCart = async (idCart, idProd)=> {
         const carritos = await this.getCarritos();
         const carritosFiltradros = carritos.find((cart)=> cart.id == idCart)
 
         let productosInCart = carritosFiltradros.products;
-        const productoIndex = productosInCart.findIndex((u)=> u.id == id.prod);
+        const productoIndex = productosInCart.findIndex((u)=> u.id == idProd);
 
-        if (productoIndex !== 1) {
+        if (productoIndex !== -1) {
             productosInCart[productoIndex].quantity = productosInCart[productoIndex].quantity + 1;
         } else {
             let producto = {
@@ -38,15 +38,27 @@ export default class CarritoManager {
         }
     };
 
-    getCarrito = async (req, res)=> {
+    getCarrito = async (idCart)=> {
         const carritos = await this.getCarritos();
         const carrito = carritos.find((cart) => cart.id == id.cart)
 
         return carrito;
     }
 
-    addCarrito = async (req, res)=> {
-
+    addCarrito = async (req, res) => {
+        const carritos = await this.getCarritos();
+        const id = carritos.length > 0 ? carritos[carritos.length - 1].id + 1 : 1;
+    
+        const newCart = {
+            id: id,
+            products: []
+        };
+        
+        carritos.push(newCart);
+    
+        await fs.promises.writeFile(this.path, JSON.stringify(carritos, null, '\t'));
+    
+        res.status(201).send(newCart);
     }
 
 }
