@@ -18,7 +18,7 @@ export default class CarritoManager {
         if (productoIndex !== 1) {
             productosInCart[productoIndex].quantity = productosInCart[productoIndex].quantity + 1;
         } else {
-            let = producto = {
+            let producto = {
                 id: idProd,
                 quantity: 1,
             };
