@@ -6,7 +6,7 @@ router.get('/', (req,res)=>{
     res.render('home')
 })
 
-router.get('/realtimeproducts', (req, res)=>{
+router.post('/realtimeproducts', (req, res)=>{
     res.render('realtimeprodcuts')
 })
 

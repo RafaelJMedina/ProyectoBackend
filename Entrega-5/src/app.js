@@ -4,6 +4,8 @@ import { Server } from 'socket.io';
  
 import __dirname from  './utils.js';
 import viewRouter from './routes/views.routes.js';
+import ProductManager from "./Manager/ProductManager.js";
+import CarritoManager from './Manager/CarritoManager.js';
 
 const PORT = 8080;
 
@@ -29,10 +31,11 @@ const io = new Server(server);
 
 const logs = [];
 
-io.on('connection', socket=>{
-    console.log('Usuario conectado');
-    socket.on('message2', data => {
-        logs.push({socketid: socket.id, message: data}); 
-        io.emit('log', {logs}) 
-    })
-})
+io.on('connection', (socket) => {
+  console.log('Usuario Conectado');
+
+  socket.on('nuevoProducto', (product) => {
+    ProductManager.addProduct(product.title, product.description, product.price);
+    io.emit('productos', ProductManager.getProducts());
+  });
+});
