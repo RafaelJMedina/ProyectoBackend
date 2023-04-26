@@ -19,18 +19,20 @@ app.set('views', __dirname+'/views');
 app.set('view engine', 'handlebars');
 
 app.use('/', viewRouter);
+app.use('/realtimeproducts', viewRouter);
 
 const server = app.listen(PORT, ()=>{
     console.log('Servidor funcionando en el puerto: ' + PORT)
 })
 
-const socketServerIO = new Server(server);
+const io = new Server(server);
 
-socketServerIO.on('connection', socket=>{
+const logs = [];
 
+io.on('connection', socket=>{
     console.log('Usuario conectado');
-
-    socket.on("message", data => {
-        socketServerIO.emit('log', data);
+    socket.on('message2', data => {
+        logs.push({socketid: socket.id, message: data}); 
+        io.emit('log', {logs}) 
     })
 })
